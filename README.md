@@ -176,6 +176,12 @@ sudo grubbby --args="amdgpu.backlight=0 --update-kernel $(sudo grubby --default-
   can **try using the NVIDIA dGPU for this**. Please refer to the
   [_See also_](#see-also) section below.
 
+- *[Kernel 6.1 might break backlight control on old/weird laptops](https://hansdegoede.livejournal.com/26427.html)* - If the `amdgpu.backlight=0` kernel parameter made no changes and the brightness control issue persists, another option is to set the `acpi_backlight` kernel parameter. The parameter accepts: `video`, `vendor`, `native` and `nvidia_wmi_ec` values. Appending `acpi_backlight=native` to the kernel parameters fixed the issue on a Legion Slim 5 16AHP9. More information on this topic on [Archlinux Wiki](https://wiki.archlinux.org/title/Backlight#Kernel_command-line_options). If it works, the parameter can be added permanently using `grubby`:
+
+```bash
+sudo grubby --args="acpi_backlight=native" --update-kernel=$(sudo grubby --default-kernel)
+```
+
 ### Temporary solution
 
 If none of the solution works for you, here is a temporary workaround:
